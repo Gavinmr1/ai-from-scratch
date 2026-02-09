@@ -1,73 +1,178 @@
-# React + TypeScript + Vite
+## AI From Scratch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Goal
+Build a learning decision-making AI from first principles, then wire it into a React UI.
 
-Currently, two official plugins are available:
+By the end, you will have:
+- A neural network written in plain JavaScript
+- Training logic you fully understand
+- A React UI to interact with the model
+- A foundation you can adapt to games, agents, and other AI projects
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Think of it as a small brain engine you can see, control, and extend.
 
-## React Compiler
+### What We Are Building
+The AI will:
+- Take numeric inputs
+- Make predictions / decisions
+- Learn from mistakes over time
+- Keep memory across steps
+- Be visualized and controlled from React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Architecture
+React UI
+- Controls (train, reset, test)
+- Visualization (weights, outputs, loss)
 
-## Expanding the ESLint configuration
+AI Engine (pure JS)
+- Neuron
+- Layer
+- NeuralNetwork
+- Trainer (learning)
+- Memory
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React never thinks.
+The AI never renders.
+Clean separation.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Phases
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Phase 0 - Environment & Structure (done / quick)
+Goal: Stable foundation.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Checklist:
+- React app created
+- [src/ai](src/ai) folder exists
+- Brain module connected to React
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Phase 1 - Single Neuron (understanding intelligence)
+Goal: Understand what "thinking" really is.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+You will build:
+- A neuron from scratch
+- Weighted inputs
+- Bias
+- Activation function
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Skills you learn:
+- Why AI is math
+- Why weights matter
+- How output changes with input
+
+Deliverable:
+- A neuron that outputs a number between 0 and 1
+- React button to run it
+
+### Phase 2 - Multiple Neurons & Layers
+Goal: Go from "calculator" to "pattern recognizer".
+
+You will build:
+- A layer of neurons
+- A full neural network class
+- Forward propagation
+
+Skills:
+- Abstraction
+- Matrix-like thinking (without libraries)
+- Why layers create intelligence
+
+Deliverable:
+- A network that can solve simple problems (AND / OR logic)
+
+### Phase 3 - Learning (backpropagation)
+Goal: Make it actually learn.
+
+You will build:
+- Error calculation
+- Gradient descent
+- Weight updates
+- Training loop
+
+Skills:
+- Why AI improves
+- How learning rate works
+- Why models fail
+
+Deliverable:
+- Network improves over time
+- Loss decreases visibly
+
+### Phase 4 - Memory & State
+Goal: Make it stateful (agent-like).
+
+You will add:
+- Short-term memory
+- Previous outputs as inputs
+- Stateful predictions
+
+Skills:
+- How agents work
+- Why memory matters
+- Foundations of RNNs (without calling it that)
+
+Deliverable:
+- AI behavior changes based on history
+
+### Phase 5 - Decision Engine
+Goal: Turn outputs into choices.
+
+You will build:
+- Scoring system
+- Thresholds
+- Action selection
+
+Skills:
+- AI is not chat
+- How game AIs think
+- How agents act
+
+Deliverable:
+- AI chooses between actions (A / B / C)
+
+### Phase 6 - React Control Panel
+Goal: Make it interactive and visual.
+
+You will build:
+- Train button
+- Reset button
+- Live outputs
+- Loss graph (simple)
+
+Skills:
+- AI debugging
+- Observability
+- Real-world tooling mindset
+
+Deliverable:
+- You can see the brain thinking
+
+### Phase 7 - Polish & Extend
+Goal: Make it yours.
+
+Options:
+- Evolutionary mutations
+- Reinforcement learning
+- Text token inputs
+- Game agent
+- Multi-agent system
+
+This is where you stop following and start inventing.
+
+## Execution Rules
+We will:
+- Write small files
+- Test every step in React
+- Never add complexity early
+- Never hide math
+- Never "just trust me"
+- Pause and unpack anything fuzzy
+
+## Next Step
+Before we write another line of code, pick the AI's first learning task:
+
+1) Logical patterns (AND / OR / XOR)
+2) Simple numeric prediction
+3) Game-style decision making
+4) Surprise me, but teach me deeply
+
+Reply with the number.

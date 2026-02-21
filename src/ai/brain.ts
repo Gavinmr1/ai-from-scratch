@@ -14,6 +14,9 @@ export class Neuron {
   bias: number;
   learningRate: number;
 
+  lastInputs: number[] = [];
+  lastOutput = 0;
+
   constructor(inputSize: number, learningRate = 0.1) {
     this.weights = [];
     for (let i = 0; i < inputSize; i++) {
@@ -24,28 +27,78 @@ export class Neuron {
   }
 
   predict(inputs: number[]): number {
+    this.lastInputs = inputs;
+
     let sum = 0;
     for (let i = 0; i < this.weights.length; i++) {
       sum += inputs[i] * this.weights[i];
     }
-    return sigmoid(sum + this.bias);
+
+    this.lastOutput = sigmoid(sum + this.bias);
+    return this.lastOutput;
   }
 
-  train(inputs: number[], target: number): number {
-    const output = this.predict(inputs);
-    const error = target - output;
+  applyGradient(error: number) {
+    const gradient = error * sigmoidDerivative(this.lastOutput);
 
-    // gradient
-    const gradient = error * sigmoidDerivative(output);
-
-    // update weights
     for (let i = 0; i < this.weights.length; i++) {
-      this.weights[i] += this.learningRate * gradient * inputs[i];
+      this.weights[i] += this.learningRate * gradient * this.lastInputs[i];
     }
 
-    // update bias
     this.bias += this.learningRate * gradient;
-
-    return error;
   }
 }
+
+
+export class Layer {
+  neurons: Neuron[];
+
+  constructor(inputSize: number, neuronCount: number, learningRate = 0.1) {
+    this.neurons = [];
+
+    for (let i = 0; i < neuronCount; i++) {
+      this.neurons.push(new Neuron(inputSize, learningRate));
+    }
+  }
+
+  forward(inputs: number[]): number[] {
+    return this.neurons.map(neuron => neuron.predict(inputs));
+  }
+}
+
+export class NeuralNetwork {
+  hiddenLayer: Layer;
+  outputNeuron: Neuron;
+
+  constructor(inputSize: number, hiddenSize: number, learningRate = 0.1) {
+    this.hiddenLayer = new Layer(inputSize, hiddenSize, learningRate);
+    this.outputNeuron = new Neuron(hiddenSize, learningRate);
+  }
+
+  predict(inputs: number[]): number {
+    const hiddenOutputs = this.hiddenLayer.forward(inputs);
+    return this.outputNeuron.predict(hiddenOutputs);
+  }
+
+  train(inputs: number[], target: number) {
+    // forward pass
+    const hiddenOutputs = this.hiddenLayer.forward(inputs);
+    const output = this.outputNeuron.predict(hiddenOutputs);
+
+    // output error
+    const outputError = target - output;
+
+    // train output neuron
+    this.outputNeuron.applyGradient(outputError);
+
+    // train hidden neurons
+    this.hiddenLayer.neurons.forEach((neuron, index) => {
+      const propagatedError =
+        outputError * this.outputNeuron.weights[index];
+
+      neuron.applyGradient(propagatedError);
+    });
+  }
+}
+
+
